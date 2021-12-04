@@ -12,18 +12,8 @@ def check_for_win():
                 winner.append(board_no)
     return list(dict.fromkeys(winner))
 
-def bool_equal(array, value):
-    # This function uses the np.where command to create a boolen array of positions in the given array, which are equal to the given value.
-    # This can be used for easy elementwise comparisson and reassignment of arrays (what is default in matlab for array == value, but not python).
-    tmp_array = np.zeros(np.shape(array), dtype=bool)
-    tmp = np.where(array == value)
-    for ind in range(0,len(tmp[0])):
-        tmp_array[tmp[0][ind], tmp[1][ind]] = True
-    return tmp_array
-
-
 def winvalue(winner):
-    return sum(boards[winner][bool_equal(np.array(drawn[winner], dtype=bool), False)])*number
+    return sum(boards[winner][np.array(drawn[winner], dtype=bool)== False])*number
     
 #endregion: Addtional functions
 #region: Load the bingo boards
@@ -55,7 +45,7 @@ for board_no in range(0,len(boards)):
 
 for number in draw_numbers:
     for board_no in range(0,len(boards)):
-        drawn[board_no][bool_equal(boards[board_no], number)] = 1   # In the drawn array all positions that contain the number in the boards array are tagged
+        drawn[board_no][boards[board_no]== number] = 1   # In the drawn array all positions that contain the number in the boards array are tagged
     if len(check_for_win()) > 0:    # Once the first winning array was detected, the number-drawing loop breaks
         break
 
@@ -69,7 +59,7 @@ for board_no in range(0,len(boards)):
 prev_win = []   # Note here which boards have already won
 for number in draw_numbers:
     for board_no in range(0,len(boards)):
-        drawn[board_no][bool_equal(boards[board_no], number)] = 1   # In the drawn array all positions that contain the number in the boards array are tagged
+        drawn[board_no][boards[board_no]== number] = 1   # In the drawn array all positions that contain the number in the boards array are tagged
     if len(check_for_win()) == len(boards): # Once the last winning array was detected, the number-drawing loop breaks
         break
     prev_win = check_for_win()  # Note which boards have already won
