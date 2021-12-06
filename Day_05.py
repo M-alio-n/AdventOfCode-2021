@@ -5,10 +5,10 @@ def extend_seafloor(current_map, new_max):
     np.pad(current_map, 0, 'constant')
     return
 #endregion: Addtional functions
-#region: Load the bingo boards
+#region: Seafloor boards
 file = open('Day_5_inpt.txt', 'r')
 lines = file.readlines()
-#endregion: Bingo boards loaded
+#endregion: Seafloor loaded
 #region: Part 1
 seafloor = np.empty([0,0])
 for counter,line in enumerate(lines):
