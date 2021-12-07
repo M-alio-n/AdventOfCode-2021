@@ -1,5 +1,4 @@
 import numpy as np
-from numpy.core.defchararray import array
 
 #region: Additional functions
 def model_lanternfish(initial_timers, model_days):
