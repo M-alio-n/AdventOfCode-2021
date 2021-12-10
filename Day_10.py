@@ -10,30 +10,19 @@ for line in file.readlines():
 #endregion: Navigation systems loaded
 #region: Part 1
 values = {')': 3, ']': 57, '}': 1197, '>': 25137}
+pairs = {'(': ')', '[': ']', '{': '}', '<': '>'}
 error_score = 0
 for ind in range(len(subsys_lines)-1, -1, -1):
     line = subsys_lines[ind]
     open_chunks = ''
     for char in line:
-        if char == '(':
-            open_chunks += '0'
-        elif char == ')' and open_chunks[-1] == '0':
+        if char in pairs:                       # opening new parenthesis
+            open_chunks += char
+        elif char == pairs[open_chunks[-1]]:    # closing last parenthesis
             open_chunks = open_chunks[:-1]
-        elif char == '[':
-            open_chunks += '1'
-        elif char == ']' and open_chunks[-1] == '1':
-            open_chunks = open_chunks[:-1]
-        elif char == '{':
-            open_chunks += '2'
-        elif char == '}' and open_chunks[-1] == '2':
-            open_chunks = open_chunks[:-1]
-        elif char == '<':
-            open_chunks += '3'
-        elif char == '>' and open_chunks[-1] == '3':
-            open_chunks = open_chunks[:-1]
-        else:
+        else:                                   # erroneus line
             error_score += values[char]
-            del subsys_lines[ind]   # Preparation for part 2
+            del subsys_lines[ind]               # Preparation for part 2
             break
 
 print('Error score for part 1: ' + str(error_score))
