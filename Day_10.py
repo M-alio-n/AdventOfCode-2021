@@ -9,6 +9,7 @@ for line in file.readlines():
     subsys_lines.append(line.strip())
 #endregion: Navigation systems loaded
 #region: Part 1
+values = {')': 3, ']': 57, '}': 1197, '>': 25137}
 error_score = 0
 for ind in range(len(subsys_lines)-1, -1, -1):
     line = subsys_lines[ind]
@@ -31,25 +32,14 @@ for ind in range(len(subsys_lines)-1, -1, -1):
         elif char == '>' and open_chunks[-1] == '3':
             open_chunks = open_chunks[:-1]
         else:
-            if char == ')':
-                error_score += 3
-                del subsys_lines[ind]
-                break
-            elif char == ']':
-                error_score += 57
-                del subsys_lines[ind]
-                break
-            elif char == '}':
-                error_score += 1197
-                del subsys_lines[ind]
-                break
-            elif char == '>':
-                error_score += 25137
-                del subsys_lines[ind]
-                break
-print(str(error_score))
+            error_score += values[char]
+            del subsys_lines[ind]   # Preparation for part 2
+            break
+
+print('Error score for part 1: ' + str(error_score))
 #endregion: Part 1 complete!
 #region: Part 2
+values = {'0': 1, '1': 2, '2': 3, '3': 4}
 scores = []
 for line in subsys_lines:
     open_chunks = ''
@@ -71,18 +61,11 @@ for line in subsys_lines:
         elif char == '>' and open_chunks[-1] == '3':
             open_chunks = open_chunks[:-1]
     score = 0
-    for ind in range(len(open_chunks)-1, -1,-1):
-        if open_chunks[ind] == '0':
-            score = score * 5 + 1
-        elif open_chunks[ind] == '1':
-            score = score * 5 + 2
-        elif open_chunks[ind] == '2':
-            score = score * 5 + 3
-        elif open_chunks[ind] == '3':
-            score = score * 5 + 4
+    for char in reversed(open_chunks):
+        score = score * 5 + values[char]
     scores.append(score)
 scores.sort()
-print(scores[int(np.floor(len(scores)/2))])
+print('Error score for part 2: ' + str(scores[int(np.floor(len(scores)/2))]))
 
 
 #endregion: Part 2 complete!
