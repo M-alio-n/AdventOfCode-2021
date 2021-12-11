@@ -1,7 +1,7 @@
 import numpy as np
 
 #region: Additional functions
-def get_adjacent(mat: np.array, row: int, col: int, mode: int = 1, dist: int = 1):
+def get_adjacent(mat: np.array, row: int, col: int, mode: str = 'direct', dist: int = 1):
     adjacent_rows = [x for x in range(row-dist, row+dist+1)]
     adjacent_cols = [x for x in range(col-dist, col+dist+1)]
     values = []
@@ -10,10 +10,10 @@ def get_adjacent(mat: np.array, row: int, col: int, mode: int = 1, dist: int = 1
         for cols in adjacent_cols:
             if rows >= 0 and cols >= 0 and rows < np.shape(mat)[0] and cols < np.shape(mat)[1]:   # handel edges and corners
                 if not (rows == row and cols == col):
-                    if mode == 2:   # All values, including diagonals
+                    if mode == 'diag':   # All values, including diagonals
                         values.append(mat[rows, cols])
                         coordinates.append([rows, cols])
-                    elif mode == 1: # No diagonal values
+                    elif mode == 'direct': # No diagonal values
                         if rows == row or cols == col:
                             values.append(mat[rows, cols])
                             coordinates.append([rows, cols])
