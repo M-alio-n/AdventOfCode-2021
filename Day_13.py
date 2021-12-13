@@ -3,16 +3,16 @@ import numpy as np
 #region: Additional functions    
 def folding(given, dir, val):
     if dir == 1:
-        half_1 = np.array(given[0:val, :])
+        outp = np.array(given[0:val, :])
         half_2 = np.array(given[val+1:, :])
-        tmp = half_1 + np.flipud(half_2)
+        outp[val-np.shape(half_2)[0]:val, :] += np.flipud(half_2)
     else:
-        half_1 = np.array(given[:, 0:val])
+        outp = np.array(given[:, 0:val])
         half_2 = np.array(given[:, val+1:])
-        tmp = half_1 + np.fliplr(half_2)
+        outp[:, val-np.shape(half_2)[1]:val] += np.fliplr(half_2)
     
-    tmp[tmp>0] = 1
-    return tmp
+    outp[outp>0] = 1
+    return outp
     
 #endregion: Addtional functions
 #region: Load paper
